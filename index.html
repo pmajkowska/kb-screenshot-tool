@@ -630,7 +630,7 @@ document.getElementById('s1-reset').addEventListener('click', function(){
 });
 
 // ── Section 2: Wrap ───────────────────────────────────────────────────────────
-var W=2130,H=1152,IMG_H=960,R_OUTER=24,R_IMG=16;
+var W=1600,H=864,IMG_H=720,R_OUTER=18,R_IMG=12;
 var s2DropEl=document.getElementById('s2-drop'), s2FileEl=document.getElementById('s2-file');
 var s2Result=document.getElementById('s2-result'), s2Output=document.getElementById('s2-output');
 var s2Dims=document.getElementById('s2-dims');
@@ -650,8 +650,8 @@ function renderWrap(img){
   var g=cx.createLinearGradient(0,0,W,H); g.addColorStop(0,'rgba(34,139,244,0.02)'); g.addColorStop(1,'rgba(34,139,244,0.07)');
   cx.fillStyle=g; cx.fillRect(0,0,W,H); cx.restore();
   cx.save(); cx.strokeStyle='rgba(34,139,244,0.10)'; cx.lineWidth=1.5; rrWrap(cx,0.75,0.75,W-1.5,H-1.5,R_OUTER); cx.stroke(); cx.restore();
-  var MAX_IMG_W = W - 144;
-  var MAX_IMG_H = 960;
+  var MAX_IMG_W = W - 108;
+  var MAX_IMG_H = 720;
   var ratio = img.naturalWidth / img.naturalHeight;
   var imgW, imgH;
   if (ratio * MAX_IMG_H > MAX_IMG_W) {
@@ -669,12 +669,12 @@ function renderWrap(img){
   ].forEach(function(s){ scx.save(); scx.shadowOffsetX=s.ox; scx.shadowOffsetY=s.oy; scx.shadowBlur=s.blur; scx.shadowColor=s.color; rrWrap(scx,imgX,imgY,imgW,imgH,R_IMG); scx.fillStyle='#fff'; scx.fill(); scx.restore(); });
   cx.drawImage(sc,0,0);
   cx.save(); rrWrap(cx,imgX,imgY,imgW,imgH,R_IMG); cx.clip(); cx.drawImage(img,imgX,imgY,imgW,imgH); cx.restore();
-  return c.toDataURL('image/jpeg', 0.92);
+  return c.toDataURL('image/png');
 }
 
 function loadWrapImage(img){
   var ratio2=img.naturalWidth/img.naturalHeight;
-  var maxW2=2130-144, maxH2=960;
+  var maxW2=1600-108, maxH2=720;
   var imgW2,imgH2;
   if(ratio2*maxH2>maxW2){imgW2=maxW2;imgH2=Math.round(maxW2/ratio2);}
   else{imgH2=maxH2;imgW2=Math.round(ratio2*maxH2);}
@@ -688,7 +688,7 @@ setupDrop(s2DropEl, s2FileEl, function(file){ readFile(file, loadWrapImage); });
 
 document.getElementById('s2-download').addEventListener('click', function(){
   if(!s2DataUrl) return;
-  var a=document.createElement('a'); a.href=s2DataUrl; a.download='appfigures-kb-screenshot.jpg';
+  var a=document.createElement('a'); a.href=s2DataUrl; a.download='appfigures-kb-screenshot.png';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
 
