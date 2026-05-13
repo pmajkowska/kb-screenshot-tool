@@ -413,27 +413,37 @@ function getPos(e) {
   return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
 }
 
+function pixelate(cx, x, y, w, h, blockSize) {
+  x=Math.round(x); y=Math.round(y); w=Math.round(w); h=Math.round(h);
+  if(w<1||h<1) return;
+  var cw=cx.canvas.width, ch=cx.canvas.height;
+  x=Math.max(0,x); y=Math.max(0,y);
+  w=Math.min(w,cw-x); h=Math.min(h,ch-y);
+  if(w<1||h<1) return;
+  var data=cx.getImageData(x,y,w,h).data;
+  for(var row=0;row<h;row+=blockSize){
+    for(var col=0;col<w;col+=blockSize){
+      var bw=Math.min(blockSize,w-col), bh=Math.min(blockSize,h-row);
+      var r=0,g=0,b=0,count=0;
+      for(var br=0;br<bh;br++){
+        for(var bc=0;bc<bw;bc++){
+          var i=((row+br)*w+(col+bc))*4;
+          r+=data[i]; g+=data[i+1]; b+=data[i+2]; count++;
+        }
+      }
+      r=Math.round(r/count); g=Math.round(g/count); b=Math.round(b/count);
+      cx.fillStyle='rgb('+r+','+g+','+b+')';
+      cx.fillRect(x+col,y+row,bw,bh);
+    }
+  }
+}
+
 function drawBlur(cx, sh) {
   var x=Math.min(sh.x1,sh.x2), y=Math.min(sh.y1,sh.y2);
   var w=Math.abs(sh.x2-sh.x1), h=Math.abs(sh.y2-sh.y1);
-  if(w<2||h<2) return;
-  var padding = 20;
-  var sx=Math.max(0,x-padding), sy=Math.max(0,y-padding);
-  var sw=Math.min(cx.canvas.width-sx, w+padding*2);
-  var sh2=Math.min(cx.canvas.height-sy, h+padding*2);
-  var imgData = cx.getImageData(sx, sy, sw, sh2);
-  var tmp = document.createElement('canvas');
-  tmp.width=sw; tmp.height=sh2;
-  var tctx=tmp.getContext('2d');
-  tctx.putImageData(imgData,0,0);
-  cx.save();
-  cx.beginPath();
-  cx.rect(x, y, w, h);
-  cx.clip();
-  cx.filter='blur(16px)';
-  cx.drawImage(tmp, sx, sy, sw, sh2);
-  cx.filter='none';
-  cx.restore();
+  if(w<4||h<4) return;
+  var blockSize = Math.max(6, Math.round(Math.min(w,h)/12));
+  pixelate(cx, x, y, w, h, blockSize);
 }
 
 function drawShape(cx, sh, sw) {
@@ -543,17 +553,8 @@ document.getElementById('s1-download').addEventListener('click', function(){
       var bx=Math.round(Math.min(mapped.x1,mapped.x2)), by=Math.round(Math.min(mapped.y1,mapped.y2));
       var bw=Math.round(Math.abs(mapped.x2-mapped.x1)), bh=Math.round(Math.abs(mapped.y2-mapped.y1));
       if(bw>2&&bh>2){
-        var bp=40;
-        var bsx=Math.max(0,bx-bp), bsy=Math.max(0,by-bp);
-        var bsw=Math.min(octx.canvas.width-bsx,bw+bp*2), bsh=Math.min(octx.canvas.height-bsy,bh+bp*2);
-        var imgData=octx.getImageData(bsx,bsy,bsw,bsh);
-        var tmp=document.createElement('canvas'); tmp.width=bsw; tmp.height=bsh;
-        var tctx=tmp.getContext('2d'); tctx.putImageData(imgData,0,0);
-        octx.save();
-        octx.beginPath(); octx.rect(bx,by,bw,bh); octx.clip();
-        octx.filter='blur(24px)';
-        octx.drawImage(tmp,bsx,bsy,bsw,bsh);
-        octx.filter='none'; octx.restore();
+        var exportBlockSize = Math.max(8, Math.round(Math.min(bw,bh)/12));
+        pixelate(octx, bx, by, bw, bh, exportBlockSize);
       }
       return;
     }
@@ -620,7 +621,7 @@ function renderWrap(img){
   ].forEach(function(s){ scx.save(); scx.shadowOffsetX=s.ox; scx.shadowOffsetY=s.oy; scx.shadowBlur=s.blur; scx.shadowColor=s.color; rrWrap(scx,imgX,imgY,imgW,IMG_H,R_IMG); scx.fillStyle='#fff'; scx.fill(); scx.restore(); });
   cx.drawImage(sc,0,0);
   cx.save(); rrWrap(cx,imgX,imgY,imgW,IMG_H,R_IMG); cx.clip(); cx.drawImage(img,imgX,imgY,imgW,IMG_H); cx.restore();
-  return c.toDataURL('image/png');
+  return c.toDataURL('image/jpeg', 0.92);
 }
 
 function loadWrapImage(img){
@@ -635,7 +636,7 @@ setupDrop(s2DropEl, s2FileEl, function(file){ readFile(file, loadWrapImage); });
 
 document.getElementById('s2-download').addEventListener('click', function(){
   if(!s2DataUrl) return;
-  var a=document.createElement('a'); a.href=s2DataUrl; a.download='appfigures-kb-screenshot.png';
+  var a=document.createElement('a'); a.href=s2DataUrl; a.download='appfigures-kb-screenshot.jpg';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 });
 
