@@ -78,6 +78,7 @@
       display: flex;
       gap: 10px;
       margin-top: 14px;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -90,6 +91,7 @@
       align-items: center;
       gap: 6px;
       border: none;
+      text-decoration: none;
     }
 
     .btn-download {
@@ -100,12 +102,26 @@
     .btn-download:hover { background: rgba(34,139,244,1); }
     .btn-download:disabled { opacity: 0.5; cursor: default; }
 
+    .btn-open {
+      background: rgba(34,139,244,0.9);
+      color: #fff;
+    }
+
+    .btn-open:hover { background: rgba(34,139,244,1); }
+
     .btn-reset {
       background: #f0f0f0;
       color: #555;
     }
 
     .btn-reset:hover { background: #e8e8e8; }
+
+    .iframe-notice {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
@@ -125,9 +141,9 @@
     <div class="result-section" id="result-section" style="display:none">
       <img id="output-img" class="output-img" alt="Styled screenshot">
       <div class="dims" id="dims-label"></div>
-      <div class="actions">
-        <button class="btn btn-download" id="btn-download">↓ Download PNG</button>
-        <button class="btn btn-reset" id="btn-reset">↩ New screenshot</button>
+      <div class="actions" id="actions"></div>
+      <div class="iframe-notice" id="iframe-notice" style="display:none">
+        Opens the tool in a new tab where you can download the image directly.
       </div>
     </div>
   </div>
@@ -135,15 +151,20 @@
   <script>
     var W = 2130, H = 1152, IMG_H = 960, R_OUTER = 24, R_IMG = 16;
 
+    var inIframe = (function() {
+      try { return window.self !== window.top; } catch(e) { return true; }
+    })();
+
     var dropZone = document.getElementById('drop-zone');
     var fileInput = document.getElementById('file-input');
     var resultSection = document.getElementById('result-section');
     var outputImg = document.getElementById('output-img');
     var dimsLabel = document.getElementById('dims-label');
-    var btnDownload = document.getElementById('btn-download');
-    var btnReset = document.getElementById('btn-reset');
+    var actionsEl = document.getElementById('actions');
+    var iframeNotice = document.getElementById('iframe-notice');
 
     var renderedDataUrl = null;
+    var currentPageUrl = window.location.href.split('?')[0];
 
     function roundRect(ctx, x, y, w, h, r) {
       ctx.beginPath();
@@ -225,6 +246,55 @@
       return canvas.toDataURL('image/png');
     }
 
+    function buildActions() {
+      actionsEl.innerHTML = '';
+
+      if (inIframe) {
+        var btnOpen = document.createElement('a');
+        btnOpen.className = 'btn btn-open';
+        btnOpen.textContent = '↗ Open in new tab to download';
+        btnOpen.href = currentPageUrl;
+        btnOpen.target = '_blank';
+        btnOpen.rel = 'noopener';
+        actionsEl.appendChild(btnOpen);
+        iframeNotice.style.display = 'block';
+      } else {
+        var btnDl = document.createElement('button');
+        btnDl.className = 'btn btn-download';
+        btnDl.textContent = '↓ Download PNG';
+        btnDl.addEventListener('click', function() {
+          if (!renderedDataUrl) return;
+          btnDl.disabled = true;
+          btnDl.textContent = 'Downloading...';
+          setTimeout(function() {
+            var a = document.createElement('a');
+            a.href = renderedDataUrl;
+            a.download = 'appfigures-kb-screenshot.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            btnDl.disabled = false;
+            btnDl.textContent = '↓ Download PNG';
+          }, 50);
+        });
+        actionsEl.appendChild(btnDl);
+      }
+
+      var btnReset = document.createElement('button');
+      btnReset.className = 'btn btn-reset';
+      btnReset.textContent = '↩ New screenshot';
+      btnReset.addEventListener('click', function() {
+        resultSection.style.display = 'none';
+        dropZone.style.display = 'block';
+        fileInput.value = '';
+        outputImg.src = '';
+        renderedDataUrl = null;
+        iframeNotice.style.display = 'none';
+        actionsEl.innerHTML = '';
+      });
+      actionsEl.appendChild(btnReset);
+    }
+
     function loadFile(file) {
       if (!file || !file.type.startsWith('image/')) return;
       var reader = new FileReader();
@@ -237,35 +307,12 @@
           outputImg.src = renderedDataUrl;
           dropZone.style.display = 'none';
           resultSection.style.display = 'block';
+          buildActions();
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
-
-    btnDownload.addEventListener('click', function() {
-      if (!renderedDataUrl) return;
-      btnDownload.disabled = true;
-      btnDownload.textContent = 'Rendering...';
-      setTimeout(function() {
-        var a = document.createElement('a');
-        a.href = renderedDataUrl;
-        a.download = 'appfigures-kb-screenshot.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        btnDownload.disabled = false;
-        btnDownload.textContent = '↓ Download PNG';
-      }, 50);
-    });
-
-    btnReset.addEventListener('click', function() {
-      resultSection.style.display = 'none';
-      dropZone.style.display = 'block';
-      fileInput.value = '';
-      outputImg.src = '';
-      renderedDataUrl = null;
-    });
 
     dropZone.addEventListener('click', function() { fileInput.click(); });
     fileInput.addEventListener('change', function(e) { loadFile(e.target.files[0]); });
