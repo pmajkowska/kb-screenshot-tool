@@ -417,14 +417,21 @@ function drawBlur(cx, sh) {
   var x=Math.min(sh.x1,sh.x2), y=Math.min(sh.y1,sh.y2);
   var w=Math.abs(sh.x2-sh.x1), h=Math.abs(sh.y2-sh.y1);
   if(w<2||h<2) return;
-  var imgData = cx.getImageData(x, y, w, h);
+  var padding = 20;
+  var sx=Math.max(0,x-padding), sy=Math.max(0,y-padding);
+  var sw=Math.min(cx.canvas.width-sx, w+padding*2);
+  var sh2=Math.min(cx.canvas.height-sy, h+padding*2);
+  var imgData = cx.getImageData(sx, sy, sw, sh2);
   var tmp = document.createElement('canvas');
-  tmp.width=w; tmp.height=h;
+  tmp.width=sw; tmp.height=sh2;
   var tctx=tmp.getContext('2d');
   tctx.putImageData(imgData,0,0);
   cx.save();
-  cx.filter='blur(12px)';
-  cx.drawImage(tmp,x,y,w,h);
+  cx.beginPath();
+  cx.rect(x, y, w, h);
+  cx.clip();
+  cx.filter='blur(16px)';
+  cx.drawImage(tmp, sx, sy, sw, sh2);
   cx.filter='none';
   cx.restore();
 }
@@ -536,10 +543,17 @@ document.getElementById('s1-download').addEventListener('click', function(){
       var bx=Math.round(Math.min(mapped.x1,mapped.x2)), by=Math.round(Math.min(mapped.y1,mapped.y2));
       var bw=Math.round(Math.abs(mapped.x2-mapped.x1)), bh=Math.round(Math.abs(mapped.y2-mapped.y1));
       if(bw>2&&bh>2){
-        var imgData=octx.getImageData(bx,by,bw,bh);
-        var tmp=document.createElement('canvas'); tmp.width=bw; tmp.height=bh;
+        var bp=40;
+        var bsx=Math.max(0,bx-bp), bsy=Math.max(0,by-bp);
+        var bsw=Math.min(octx.canvas.width-bsx,bw+bp*2), bsh=Math.min(octx.canvas.height-bsy,bh+bp*2);
+        var imgData=octx.getImageData(bsx,bsy,bsw,bsh);
+        var tmp=document.createElement('canvas'); tmp.width=bsw; tmp.height=bsh;
         var tctx=tmp.getContext('2d'); tctx.putImageData(imgData,0,0);
-        octx.save(); octx.filter='blur(16px)'; octx.drawImage(tmp,bx,by,bw,bh); octx.filter='none'; octx.restore();
+        octx.save();
+        octx.beginPath(); octx.rect(bx,by,bw,bh); octx.clip();
+        octx.filter='blur(24px)';
+        octx.drawImage(tmp,bsx,bsy,bsw,bsh);
+        octx.filter='none'; octx.restore();
       }
       return;
     }
