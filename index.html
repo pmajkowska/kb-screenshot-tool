@@ -14,9 +14,16 @@
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: #ffffff;
-      padding: 104px 24px 80px;
+      padding-top: 104px;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page {
+      flex: 1;
+      padding: 48px 24px 0;
     }
 
     .page { width: 100%; max-width: 880px; }
@@ -357,6 +364,16 @@
       border-color: rgba(12,13,14,0.25);
       background: rgba(12,13,14,0.03);
       color: #0C0D0E;
+    }
+    .footer {
+      text-align: center;
+      padding: 24px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: rgba(12,13,14,0.35);
+      border-top: 1px solid rgba(12,13,14,0.06);
+      margin-top: auto;
+      padding-top: 48px;
     }
   </style>
 </head>
@@ -808,5 +825,6 @@ document.addEventListener('paste', function(e){
   }
 });
 </script>
+<footer class="footer" style="width:100%;max-width:880px;">© 2026 Appfigures</footer>
 </body>
 </html>
