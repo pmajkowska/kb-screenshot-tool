@@ -663,9 +663,9 @@ function renderWrap(img){
   }
   var imgX=Math.round((W-imgW)/2), imgY=Math.round((H-imgH)/2);
   var sc=document.createElement('canvas'); sc.width=W; sc.height=H; var scx=sc.getContext('2d');
-  [{ox:0,oy:1,blur:3,color:'rgba(12,13,14,0.05)'},{ox:0,oy:1,blur:2,color:'rgba(12,13,14,0.10)'},
-   {ox:68,oy:108,blur:36,color:'rgba(230,235,245,0.00)'},{ox:25,oy:39,blur:28,color:'rgba(230,235,245,0.05)'},
-   {ox:11,oy:17,blur:20,color:'rgba(230,235,245,0.09)'},{ox:3,oy:4,blur:11,color:'rgba(230,235,245,0.10)'}
+  [{ox:0,oy:0.563,blur:1.69,color:'rgba(12,13,14,0.07)'},{ox:0,oy:0.563,blur:1.127,color:'rgba(12,13,14,0.14)'},
+   {ox:38.31,oy:60.845,blur:20.282,color:'rgba(230,235,245,0.00)'},{ox:14.085,oy:21.972,blur:15.775,color:'rgba(230,235,245,0.06)'},
+   {ox:6.197,oy:9.577,blur:11.268,color:'rgba(230,235,245,0.12)'},{ox:1.69,oy:2.254,blur:6.197,color:'rgba(230,235,245,0.14)'}
   ].forEach(function(s){ scx.save(); scx.shadowOffsetX=s.ox; scx.shadowOffsetY=s.oy; scx.shadowBlur=s.blur; scx.shadowColor=s.color; rrWrap(scx,imgX,imgY,imgW,imgH,R_IMG); scx.fillStyle='#fff'; scx.fill(); scx.restore(); });
   cx.drawImage(sc,0,0);
   cx.save(); rrWrap(cx,imgX,imgY,imgW,imgH,R_IMG); cx.clip(); cx.drawImage(img,imgX,imgY,imgW,imgH); cx.restore();
