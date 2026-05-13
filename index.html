@@ -308,6 +308,10 @@
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="2" y1="11" x2="11" y2="2"/></svg>
           Line
         </button>
+        <button class="tool-btn" id="tool-blur">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="11" height="5" rx="1.5"/><line x1="3" y1="6.5" x2="5" y2="6.5"/><line x1="6" y1="6.5" x2="8" y2="6.5"/><line x1="9" y1="6.5" x2="10" y2="6.5"/></svg>
+          Blur
+        </button>
         <div class="tool-sep"></div>
         <button class="tool-btn ghost" id="tool-undo">↩ Undo</button>
         <button class="tool-btn ghost" id="tool-clear">✕ Start over</button>
@@ -409,7 +413,24 @@ function getPos(e) {
   return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
 }
 
+function drawBlur(cx, sh) {
+  var x=Math.min(sh.x1,sh.x2), y=Math.min(sh.y1,sh.y2);
+  var w=Math.abs(sh.x2-sh.x1), h=Math.abs(sh.y2-sh.y1);
+  if(w<2||h<2) return;
+  var imgData = cx.getImageData(x, y, w, h);
+  var tmp = document.createElement('canvas');
+  tmp.width=w; tmp.height=h;
+  var tctx=tmp.getContext('2d');
+  tctx.putImageData(imgData,0,0);
+  cx.save();
+  cx.filter='blur(12px)';
+  cx.drawImage(tmp,x,y,w,h);
+  cx.filter='none';
+  cx.restore();
+}
+
 function drawShape(cx, sh, sw) {
+  if (sh.type === 'blur') { drawBlur(cx, sh); return; }
   cx.save();
   cx.strokeStyle = STROKE_COLOR;
   cx.lineWidth = sw;
@@ -451,6 +472,11 @@ function redraw(preview) {
   all.forEach(function(sh){ drawShape(ctx, sh, sw); });
 }
 
+function getDisplayScale() {
+  var canvasRect = canvas.getBoundingClientRect();
+  return canvas.width / canvasRect.width;
+}
+
 function loadAnnotImage(img) {
   baseImage=img; canvas.width=img.naturalWidth; canvas.height=img.naturalHeight;
   shapes=[]; redraw(); s1Drop.style.display='none'; s1Editor.style.display='block';
@@ -458,7 +484,7 @@ function loadAnnotImage(img) {
 
 setupDrop(s1Drop, s1File, function(file){ readFile(file, function(img){ loadAnnotImage(img); }); });
 
-['rect','arrow','line'].forEach(function(t){
+['rect','arrow','line','blur'].forEach(function(t){
   document.getElementById('tool-'+t).addEventListener('click', function(){
     currentTool=t;
     document.querySelectorAll('.tool-btn').forEach(function(b){ b.classList.remove('active'); });
@@ -502,10 +528,22 @@ document.getElementById('s1-download').addEventListener('click', function(){
   var octx=out.getContext('2d');
   octx.drawImage(baseImage,0,0);
   var scaleX=baseImage.naturalWidth/canvas.width, scaleY=baseImage.naturalHeight/canvas.height;
+  var displayScale = getDisplayScale();
+  var exportStroke = STROKE_WIDTH * displayScale;
   shapes.forEach(function(sh){
     var mapped = { type:sh.type, x1:sh.x1*scaleX, y1:sh.y1*scaleY, x2:sh.x2*scaleX, y2:sh.y2*scaleY };
-    var s2 = 1;
-    octx.save(); octx.strokeStyle=STROKE_COLOR; octx.lineWidth=STROKE_WIDTH; octx.lineCap='round'; octx.lineJoin='round';
+    if(mapped.type==='blur'){
+      var bx=Math.round(Math.min(mapped.x1,mapped.x2)), by=Math.round(Math.min(mapped.y1,mapped.y2));
+      var bw=Math.round(Math.abs(mapped.x2-mapped.x1)), bh=Math.round(Math.abs(mapped.y2-mapped.y1));
+      if(bw>2&&bh>2){
+        var imgData=octx.getImageData(bx,by,bw,bh);
+        var tmp=document.createElement('canvas'); tmp.width=bw; tmp.height=bh;
+        var tctx=tmp.getContext('2d'); tctx.putImageData(imgData,0,0);
+        octx.save(); octx.filter='blur(16px)'; octx.drawImage(tmp,bx,by,bw,bh); octx.filter='none'; octx.restore();
+      }
+      return;
+    }
+    octx.save(); octx.strokeStyle=STROKE_COLOR; octx.lineWidth=exportStroke; octx.lineCap='round'; octx.lineJoin='round';
     if(mapped.type==='rect'){
       var x=Math.min(mapped.x1,mapped.x2),y=Math.min(mapped.y1,mapped.y2),w=Math.abs(mapped.x2-mapped.x1),h=Math.abs(mapped.y2-mapped.y1);
       var r=Math.min(RECT_RADIUS,w/2,h/2);
