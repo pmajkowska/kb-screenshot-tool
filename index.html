@@ -37,7 +37,7 @@
       font-family: 'Satoshi', 'Inter', sans-serif;
       font-size: 15px;
       font-weight: 700;
-      color: #0C0D0E;
+      color: rgba(12,13,14,0.72);
     }
 
     .page-header { margin-bottom: 48px; }
@@ -55,7 +55,7 @@
       font-family: 'Inter', sans-serif;
       font-size: 16px;
       font-weight: 400;
-      line-height: 28px;
+      line-height: 26px;
       color: rgba(12,13,14,0.72);
       max-width: 640px;
     }
@@ -76,7 +76,7 @@
       font-family: 'Satoshi', 'Inter', sans-serif;
       font-size: 20px;
       font-weight: 700;
-      line-height: 28px;
+      line-height: 26px;
       color: #0C0D0E;
       margin-bottom: 4px;
     }
@@ -134,19 +134,25 @@
 
     .canvas-wrap {
       position: relative;
-      display: inline-block;
       width: 100%;
-      border-radius: 10px;
+      height: 520px;
+      border-radius: 12px;
       overflow: hidden;
-      background: #f7f7f7;
+      background: rgba(12,13,14,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     #annot-canvas {
       display: block;
-      width: 100%;
+      max-width: calc(100% - 48px);
+      max-height: 472px;
+      width: auto;
       height: auto;
       cursor: crosshair;
       touch-action: none;
+      border-radius: 6px;
     }
 
     .toolbar {
@@ -396,10 +402,11 @@ function snapAngle(x1, y1, x2, y2) {
 
 function getPos(e) {
   var rect = canvas.getBoundingClientRect();
-  var s = canvas.width / canvas.offsetWidth;
+  var scaleX = canvas.width / rect.width;
+  var scaleY = canvas.height / rect.height;
   var clientX = e.touches ? e.touches[0].clientX : e.clientX;
   var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-  return { x: (clientX - rect.left) * s, y: (clientY - rect.top) * s };
+  return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
 }
 
 function drawShape(cx, sh, sw) {
@@ -439,7 +446,8 @@ function redraw(preview) {
   ctx.clearRect(0,0,canvas.width,canvas.height);
   if (baseImage) ctx.drawImage(baseImage,0,0,canvas.width,canvas.height);
   var all = preview ? shapes.concat([preview]) : shapes;
-  var sw = STROKE_WIDTH * (canvas.width / canvas.offsetWidth);
+  var canvasRect = canvas.getBoundingClientRect();
+  var sw = STROKE_WIDTH * (canvas.width / canvasRect.width);
   all.forEach(function(sh){ drawShape(ctx, sh, sw); });
 }
 
