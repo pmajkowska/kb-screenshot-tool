@@ -22,7 +22,7 @@
 
     .page {
       flex: 1;
-      padding: 48px 24px 24px;
+      padding: 48px 24px 0;
     }
 
     .page { width: 100%; max-width: 880px; }
@@ -60,7 +60,6 @@
 
     .page-sub {
       font-family: 'Inter', sans-serif;
-      font-family: 'Inter', sans-serif;
       font-size: 14px;
       font-weight: 400;
       line-height: 23px;
@@ -91,10 +90,9 @@
 
     .section-desc {
       font-family: 'Inter', sans-serif;
-      font-family: 'Inter', sans-serif;
       font-size: 14px;
       font-weight: 400;
-      line-height: 23px;
+      line-height: 20px;
       color: rgba(12,13,14,0.72);
     }
 
@@ -102,7 +100,7 @@
       border: 1.5px dashed rgba(34,139,244,0.25);
       border-radius: 12px;
       background: rgba(34,139,244,0.02);
-      padding: 48px 24px;
+      padding: 72px 24px;
       text-align: center;
       cursor: pointer;
       transition: border-color 0.15s, background 0.15s;
@@ -146,7 +144,6 @@
       width: 100%;
       height: 520px;
       border-radius: 12px;
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -272,6 +269,13 @@
 
     .btn-ghost { background: rgba(12,13,14,0.05); color: rgba(12,13,14,0.72); }
     .btn-ghost:hover { background: rgba(12,13,14,0.09); }
+
+    .btn-outline-blue {
+      background: #fff;
+      color: #228BF4;
+      border: 1.5px solid rgba(34,139,244,0.4);
+    }
+    .btn-outline-blue:hover { background: rgba(34,139,244,0.05); border-color: #228BF4; }
 
     .bottom-bar {
       display: flex;
@@ -413,23 +417,18 @@
 
   <div class="page-header">
     <div class="page-title">Knowledge Base Screenshot Tool</div>
-    <div class="page-sub">Use Annotate to highlight parts of your screenshot with rectangles, arrows, or lines. Once done, bring the result into Wrap to add the standard KB container and download. If your screenshot needs no annotation, go directly to Wrap.</div>
+    <div class="page-sub">This tool helps anyone on the team create consistent, on-brand screenshots for the Appfigures knowledge base. Drop in a screenshot, annotate if needed, and download — plain or wrapped in the KB container.</div>
   </div>
 
   <!-- SECTION 1 -->
   <div class="section" id="s1">
-    <div class="section-header">
-      <div class="section-title">Annotate</div>
-      <div class="section-desc">Draw rectangles, arrows, or lines on a screenshot, then download.</div>
-    </div>
-
     <div id="s1-drop" class="drop-zone">
       <div class="drop-icon">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M9 12V3M5 7l4-4 4 4M3 15h12"/>
         </svg>
       </div>
-      <div class="drop-label">Drop or paste a screenshot to annotate</div>
+      <div class="drop-label">Drop or paste a screenshot</div>
       <div class="drop-sub">PNG, JPG, WebP &nbsp;·&nbsp; Cmd+V / Ctrl+V to paste</div>
       <input type="file" id="s1-file" accept="image/*">
     </div>
@@ -471,54 +470,24 @@
       </div>
 
       <div class="bottom-bar">
-        <button class="btn btn-primary" id="s1-download">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4 6l3 3 3-3M2 11h10"/></svg>
-          Download screenshot
-        </button>
         <button class="btn btn-ghost" id="s1-reset">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
           Add new screenshot
         </button>
+        <div style="display:flex;gap:8px;margin-left:auto;">
+          <button class="btn btn-outline-blue" id="s1-download-plain">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4 6l3 3 3-3M2 11h10"/></svg>
+            Download screenshot
+          </button>
+          <button class="btn btn-primary" id="s1-download">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4 6l3 3 3-3M2 11h10"/></svg>
+            Download wrapped
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="divider"></div>
-
-  <!-- SECTION 2 -->
-  <div class="section" id="s2">
-    <div class="section-header">
-      <div class="section-title">Wrap</div>
-      <div class="section-desc">Place your screenshot inside the standard KB container and download as a ready-to-upload PNG.</div>
-    </div>
-
-    <div id="s2-drop" class="drop-zone">
-      <div class="drop-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 12V3M5 7l4-4 4 4M3 15h12"/>
-        </svg>
-      </div>
-      <div class="drop-label">Drop or paste a screenshot to wrap</div>
-      <div class="drop-sub">PNG, JPG, WebP &nbsp;·&nbsp; Cmd+V / Ctrl+V to paste</div>
-      <input type="file" id="s2-file" accept="image/*">
-    </div>
-
-    <div id="s2-result" style="display:none">
-      <img id="s2-output" class="output-img" alt="Wrapped screenshot">
-      <div class="bottom-bar">
-        <button class="btn btn-primary" id="s2-download">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7M4 6l3 3 3-3M2 11h10"/></svg>
-          Download image
-        </button>
-        <button class="btn btn-ghost" id="s2-reset">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6.5" y1="1" x2="6.5" y2="12"/><line x1="1" y1="6.5" x2="12" y2="6.5"/></svg>
-          Add new screenshot
-        </button>
-        <span class="dims" id="s2-dims"></span>
-      </div>
-
-    </div>
-  </div>
 
 </div>
 <script>
@@ -537,27 +506,26 @@ function setupDrop(dropEl, fileInput, onFile) {
   dropEl.addEventListener('drop', function(e){ e.preventDefault(); dropEl.classList.remove('dragover'); if(e.dataTransfer.files[0]) onFile(e.dataTransfer.files[0]); });
 }
 
-function pixelate(cx, x, y, w, h, blockSize) {
+function pixelate(cx,x,y,w,h,blockSize){
   x=Math.round(x);y=Math.round(y);w=Math.round(w);h=Math.round(h);
   if(w<1||h<1) return;
-  var cw=cx.canvas.width,ch=cx.canvas.height;
   x=Math.max(0,x);y=Math.max(0,y);
-  w=Math.min(w,cw-x);h=Math.min(h,ch-y);
+  w=Math.min(w,cx.canvas.width-x);h=Math.min(h,cx.canvas.height-y);
   if(w<1||h<1) return;
   var data=cx.getImageData(x,y,w,h).data;
   for(var row=0;row<h;row+=blockSize){
     for(var col=0;col<w;col+=blockSize){
-      var bw=Math.min(blockSize,w-col),bh=Math.min(blockSize,h-row);
+      var bw=Math.min(blockSize,w-col),bh2=Math.min(blockSize,h-row);
       var r=0,g=0,b=0,count=0;
-      for(var br=0;br<bh;br++){for(var bc=0;bc<bw;bc++){var i=((row+br)*w+(col+bc))*4;r+=data[i];g+=data[i+1];b+=data[i+2];count++;}}
+      for(var br=0;br<bh2;br++){for(var bc=0;bc<bw;bc++){var i=((row+br)*w+(col+bc))*4;r+=data[i];g+=data[i+1];b+=data[i+2];count++;}}
       r=Math.round(r/count);g=Math.round(g/count);b=Math.round(b/count);
       cx.fillStyle='rgb('+r+','+g+','+b+')';
-      cx.fillRect(x+col,y+row,bw,bh);
+      cx.fillRect(x+col,y+row,bw,bh2);
     }
   }
 }
 
-function drawBlur(cx, sh) {
+function drawBlur(cx,sh){
   var x=Math.min(sh.x1,sh.x2),y=Math.min(sh.y1,sh.y2);
   var w=Math.abs(sh.x2-sh.x1),h=Math.abs(sh.y2-sh.y1);
   if(w<4||h<4) return;
@@ -566,165 +534,138 @@ function drawBlur(cx, sh) {
 }
 
 // ── Section 1: Annotate ───────────────────────────────────────────────────────
-var s1Drop = document.getElementById('s1-drop');
-var s1File = document.getElementById('s1-file');
-var s1Editor = document.getElementById('s1-editor');
-var canvas = document.getElementById('annot-canvas');
-var ctx = canvas.getContext('2d');
-var STROKE_COLOR = '#FF4600', STROKE_WIDTH = 2, RECT_RADIUS = 12;
-var baseImage = null, shapes = [], currentTool = 'rect', drawing = false, startX, startY;
+var s1Drop=document.getElementById('s1-drop');
+var s1File=document.getElementById('s1-file');
+var s1Editor=document.getElementById('s1-editor');
+var canvas=document.getElementById('annot-canvas');
+var ctx=canvas.getContext('2d');
+var STROKE_COLOR='#FF4600', STROKE_WIDTH=2, RECT_RADIUS=12;
+var baseImage=null, shapes=[], currentTool='rect', drawing=false, startX, startY;
+var selectedIdx=-1, dragging=false, dragOffX=0, dragOffY=0, resizing=false, resizeHandle=-1;
+var HANDLE_SIZE=8;
 
-var selectedIdx = -1;
-var dragging = false, dragOffX = 0, dragOffY = 0;
-var resizing = false, resizeHandle = -1;
-var HANDLE_SIZE = 8;
-
-// Shape selection toolbar (colors + delete)
-var COLORS = [
-  {hex:'#FF4600', label:'Orange'},
-  {hex:'#0FA970', label:'Green'},
-  {hex:'#8061D9', label:'Purple'},
-  {hex:'#228BF4', label:'Blue'},
-  {hex:'#F0568A', label:'Pink'}
+// ── Color picker toolbar ──────────────────────────────────────────────────────
+var COLORS=[
+  {hex:'#FF4600',label:'Orange'},
+  {hex:'#0FA970',label:'Green'},
+  {hex:'#8061D9',label:'Purple'},
+  {hex:'#228BF4',label:'Blue'},
+  {hex:'#F0568A',label:'Pink'}
 ];
 
-var selToolbar = document.createElement('div');
-selToolbar.style.cssText = 'position:absolute;display:none;align-items:center;gap:6px;background:#fff;border:1.5px solid rgba(12,13,14,0.12);border-radius:10px;padding:5px 8px;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.10);';
-document.getElementById('s1-editor').style.position = 'relative';
+var selToolbar=document.createElement('div');
+selToolbar.style.cssText='position:absolute;display:none;align-items:center;gap:6px;background:#fff;border:1.5px solid rgba(12,13,14,0.12);border-radius:10px;padding:5px 8px;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.10);';
+document.getElementById('s1-editor').style.position='relative';
 
-// Color swatches
-COLORS.forEach(function(c) {
-  var swatch = document.createElement('button');
-  swatch.style.cssText = 'width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,0.08);background:'+c.hex+';cursor:pointer;padding:0;flex-shrink:0;transition:transform 0.1s;';
-  swatch.title = c.label;
-  swatch.addEventListener('mouseenter', function(){ swatch.style.transform='scale(1.2)'; });
-  swatch.addEventListener('mouseleave', function(){ swatch.style.transform='scale(1)'; });
-  swatch.addEventListener('click', function(e) {
+COLORS.forEach(function(c){
+  var sw=document.createElement('button');
+  sw.style.cssText='width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,0.08);background:'+c.hex+';cursor:pointer;padding:0;flex-shrink:0;transition:transform 0.1s;';
+  sw.title=c.label; sw._hex=c.hex;
+  sw.addEventListener('mouseenter',function(){sw.style.transform='scale(1.2)';});
+  sw.addEventListener('mouseleave',function(){sw.style.transform='scale(1)';});
+  sw.addEventListener('click',function(e){
     e.stopPropagation();
-    if (selectedIdx>=0) {
-      shapes[selectedIdx].color = c.hex;
-      updateSwatchActive();
-      redraw();
-    }
+    if(selectedIdx>=0){shapes[selectedIdx].color=c.hex;updateSwatchActive();redraw();}
   });
-  swatch._hex = c.hex;
-  selToolbar.appendChild(swatch);
+  selToolbar.appendChild(sw);
 });
 
-// Divider
-var div = document.createElement('div');
-div.style.cssText = 'width:1px;height:18px;background:rgba(12,13,14,0.1);flex-shrink:0;';
-selToolbar.appendChild(div);
+var tbDiv=document.createElement('div');
+tbDiv.style.cssText='width:1px;height:18px;background:rgba(12,13,14,0.1);flex-shrink:0;';
+selToolbar.appendChild(tbDiv);
 
-// Delete button
-var deleteBtn = document.createElement('button');
-deleteBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 12,4"/><path d="M5 4V3h4v1"/><path d="M3 4l1 8h6l1-8"/></svg>';
-deleteBtn.style.cssText = 'background:transparent;border:none;width:28px;height:28px;padding:0;cursor:pointer;color:rgba(12,13,14,0.6);display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0;';
-deleteBtn.title = 'Delete shape';
-deleteBtn.addEventListener('mouseenter', function(){ deleteBtn.style.background='rgba(12,13,14,0.06)'; });
-deleteBtn.addEventListener('mouseleave', function(){ deleteBtn.style.background='transparent'; });
-deleteBtn.addEventListener('click', function(e) {
+var deleteBtn=document.createElement('button');
+deleteBtn.innerHTML='<svg width="16" height="16" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 12,4"/><path d="M5 4V3h4v1"/><path d="M3 4l1 8h6l1-8"/></svg>';
+deleteBtn.style.cssText='background:transparent;border:none;width:28px;height:28px;padding:0;cursor:pointer;color:rgba(12,13,14,0.6);display:flex;align-items:center;justify-content:center;border-radius:6px;flex-shrink:0;';
+deleteBtn.title='Delete shape';
+deleteBtn.addEventListener('mouseenter',function(){deleteBtn.style.background='rgba(12,13,14,0.06)';});
+deleteBtn.addEventListener('mouseleave',function(){deleteBtn.style.background='transparent';});
+deleteBtn.addEventListener('click',function(e){
   e.stopPropagation();
-  if (selectedIdx>=0) {
-    shapes.splice(selectedIdx,1);
-    selectedIdx=-1;
-    hideDeleteBtn();
-    redraw();
-  }
+  if(selectedIdx>=0){shapes.splice(selectedIdx,1);selectedIdx=-1;hideToolbar();redraw();}
 });
 selToolbar.appendChild(deleteBtn);
 document.getElementById('s1-editor').appendChild(selToolbar);
 
-function updateSwatchActive() {
-  var currentColor = (selectedIdx>=0 && shapes[selectedIdx]) ? (shapes[selectedIdx].color||STROKE_COLOR) : STROKE_COLOR;
-  selToolbar.querySelectorAll('button').forEach(function(sw) {
-    if (sw._hex) {
-      sw.style.border = sw._hex === currentColor ? '2px solid rgba(0,0,0,0.4)' : '2px solid rgba(0,0,0,0.08)';
-    }
+function updateSwatchActive(){
+  var cur=(selectedIdx>=0&&shapes[selectedIdx])?(shapes[selectedIdx].color||STROKE_COLOR):STROKE_COLOR;
+  selToolbar.querySelectorAll('button').forEach(function(sw){
+    if(sw._hex) sw.style.border=sw._hex===cur?'2px solid rgba(0,0,0,0.4)':'2px solid rgba(0,0,0,0.08)';
   });
 }
 
-function showDeleteBtn(sh) {
-  var canvasRect = canvas.getBoundingClientRect();
-  var editorRect = document.getElementById('s1-editor').getBoundingClientRect();
-  var scaleX = canvasRect.width / canvas.width;
-  var scaleY = canvasRect.height / canvas.height;
-
-  var canvasLeft = canvasRect.left - editorRect.left;
-  var canvasTop = canvasRect.top - editorRect.top;
-
-  // Position toolbar above the top-center of the shape
+function showToolbar(sh){
+  var canvasRect=canvas.getBoundingClientRect();
+  var editorRect=document.getElementById('s1-editor').getBoundingClientRect();
+  var scaleX=canvasRect.width/canvas.width, scaleY=canvasRect.height/canvas.height;
+  var canvasLeft=canvasRect.left-editorRect.left;
+  var canvasTop=canvasRect.top-editorRect.top;
   var cx2, ty;
-  if (sh.type==='rect') {
-    cx2 = (Math.min(sh.x1,sh.x2) + Math.abs(sh.x2-sh.x1)/2) * scaleX;
-    ty = Math.min(sh.y1,sh.y2) * scaleY;
+  if(sh.type==='rect'){
+    cx2=(Math.min(sh.x1,sh.x2)+Math.abs(sh.x2-sh.x1)/2)*scaleX;
+    ty=Math.min(sh.y1,sh.y2)*scaleY;
   } else {
-    cx2 = ((sh.x1+sh.x2)/2) * scaleX;
-    ty = Math.min(sh.y1,sh.y2) * scaleY;
+    cx2=((sh.x1+sh.x2)/2)*scaleX;
+    ty=Math.min(sh.y1,sh.y2)*scaleY;
   }
-
-  selToolbar.style.display = 'flex';
+  selToolbar.style.display='flex';
   updateSwatchActive();
-
-  // Position: horizontally centered on shape, 10px above top edge
-  var tbW = selToolbar.offsetWidth || 180;
-  var left = canvasLeft + cx2 - tbW/2;
-  var top = canvasTop + ty - selToolbar.offsetHeight - 10;
-  if (top < 0) top = canvasTop + Math.max(sh.y1,sh.y2)*scaleY + 10;
-
-  selToolbar.style.left = left + 'px';
-  selToolbar.style.top = top + 'px';
+  var tbW=selToolbar.offsetWidth||190;
+  var tbH=selToolbar.offsetHeight||38;
+  var left=canvasLeft+cx2-tbW/2;
+  var top=canvasTop+ty-tbH-10;
+  if(top<0) top=canvasTop+Math.max(sh.y1,sh.y2)*scaleY+10;
+  selToolbar.style.left=left+'px';
+  selToolbar.style.top=top+'px';
 }
 
-function hideDeleteBtn() {
-  selToolbar.style.display = 'none';
-}
+function hideToolbar(){selToolbar.style.display='none';}
 
-function snapAngle(x1, y1, x2, y2) {
-  var dx=x2-x1, dy=y2-y1;
+// ── Geometry helpers ──────────────────────────────────────────────────────────
+function snapAngle(x1,y1,x2,y2){
+  var dx=x2-x1,dy=y2-y1;
   var angle=Math.atan2(dy,dx)*180/Math.PI;
   var len=Math.sqrt(dx*dx+dy*dy);
   var snapped=Math.round(angle/45)*45;
   var rad=snapped*Math.PI/180;
-  return { x: x1+len*Math.cos(rad), y: y1+len*Math.sin(rad) };
+  return{x:x1+len*Math.cos(rad),y:y1+len*Math.sin(rad)};
 }
 
-function getPos(e) {
+function getPos(e){
   var rect=canvas.getBoundingClientRect();
   var scaleX=canvas.width/rect.width, scaleY=canvas.height/rect.height;
   var clientX=e.touches?e.touches[0].clientX:e.clientX;
   var clientY=e.touches?e.touches[0].clientY:e.clientY;
-  return { x:(clientX-rect.left)*scaleX, y:(clientY-rect.top)*scaleY };
+  return{x:(clientX-rect.left)*scaleX,y:(clientY-rect.top)*scaleY};
 }
 
-function getHandles(sh) {
-  if (sh.type==='rect') {
+function getHandles(sh){
+  if(sh.type==='rect'){
     var x=Math.min(sh.x1,sh.x2),y=Math.min(sh.y1,sh.y2);
     var w=Math.abs(sh.x2-sh.x1),h=Math.abs(sh.y2-sh.y1);
-    return [{x:x,y:y},{x:x+w/2,y:y},{x:x+w,y:y},{x:x+w,y:y+h/2},
-            {x:x+w,y:y+h},{x:x+w/2,y:y+h},{x:x,y:y+h},{x:x,y:y+h/2}];
-  } else {
-    return [{x:sh.x1,y:sh.y1},{x:sh.x2,y:sh.y2}];
+    return[{x:x,y:y},{x:x+w/2,y:y},{x:x+w,y:y},{x:x+w,y:y+h/2},
+           {x:x+w,y:y+h},{x:x+w/2,y:y+h},{x:x,y:y+h},{x:x,y:y+h/2}];
   }
+  return[{x:sh.x1,y:sh.y1},{x:sh.x2,y:sh.y2}];
 }
 
-function hitHandle(sh, px, py) {
+function hitHandle(sh,px,py){
   var handles=getHandles(sh);
   var hs=HANDLE_SIZE*(canvas.width/canvas.getBoundingClientRect().width);
-  for (var i=0;i<handles.length;i++) {
-    if (Math.abs(px-handles[i].x)<=hs&&Math.abs(py-handles[i].y)<=hs) return i;
+  for(var i=0;i<handles.length;i++){
+    if(Math.abs(px-handles[i].x)<=hs&&Math.abs(py-handles[i].y)<=hs) return i;
   }
   return -1;
 }
 
-function hitShape(sh, px, py) {
+function hitShape(sh,px,py){
   var thresh=10*(canvas.width/canvas.getBoundingClientRect().width);
-  if (sh.type==='rect') {
+  if(sh.type==='rect'){
     var x=Math.min(sh.x1,sh.x2),y=Math.min(sh.y1,sh.y2);
     var w=Math.abs(sh.x2-sh.x1),h=Math.abs(sh.y2-sh.y1);
-    return (px>=x-thresh&&px<=x+w+thresh&&py>=y-thresh&&py<=y+h+thresh)&&
+    return(px>=x-thresh&&px<=x+w+thresh&&py>=y-thresh&&py<=y+h+thresh)&&
            !(px>x+thresh&&px<x+w-thresh&&py>y+thresh&&py<y+h-thresh);
-  } else if (sh.type==='line'||sh.type==='arrow') {
+  } else if(sh.type==='line'||sh.type==='arrow'){
     var dx=sh.x2-sh.x1,dy=sh.y2-sh.y1,len=Math.sqrt(dx*dx+dy*dy);
     if(len<1) return false;
     var t=((px-sh.x1)*dx+(py-sh.y1)*dy)/(len*len);
@@ -735,44 +676,39 @@ function hitShape(sh, px, py) {
   return false;
 }
 
-function applyResizeHandle(sh, hi, px, py) {
-  if (sh.type==='rect') {
+function applyResizeHandle(sh,hi,px,py){
+  if(sh.type==='rect'){
     var lx=Math.min(sh.x1,sh.x2),rx=Math.max(sh.x1,sh.x2);
     var ty=Math.min(sh.y1,sh.y2),by=Math.max(sh.y1,sh.y2);
-    if(hi===0){lx=px;ty=py;} else if(hi===1){ty=py;} else if(hi===2){rx=px;ty=py;}
-    else if(hi===3){rx=px;} else if(hi===4){rx=px;by=py;} else if(hi===5){by=py;}
-    else if(hi===6){lx=px;by=py;} else if(hi===7){lx=px;}
+    if(hi===0){lx=px;ty=py;}else if(hi===1){ty=py;}else if(hi===2){rx=px;ty=py;}
+    else if(hi===3){rx=px;}else if(hi===4){rx=px;by=py;}else if(hi===5){by=py;}
+    else if(hi===6){lx=px;by=py;}else if(hi===7){lx=px;}
     sh.x1=lx;sh.y1=ty;sh.x2=rx;sh.y2=by;
   } else {
-    // snap to 45/90 for arrow/line handles
-    if (hi===0) {
-      var sn=snapAngle(sh.x2,sh.y2,px,py); sh.x1=sn.x; sh.y1=sn.y;
-    } else {
-      var sn=snapAngle(sh.x1,sh.y1,px,py); sh.x2=sn.x; sh.y2=sn.y;
-    }
+    if(hi===0){var sn=snapAngle(sh.x2,sh.y2,px,py);sh.x1=sn.x;sh.y1=sn.y;}
+    else{var sn=snapAngle(sh.x1,sh.y1,px,py);sh.x2=sn.x;sh.y2=sn.y;}
   }
 }
 
-function drawShape(cx, sh, sw, isSelected) {
-  if (sh.type==='blur') { drawBlur(cx,sh); return; }
+// ── Draw ──────────────────────────────────────────────────────────────────────
+function drawShape(cx,sh,sw,isSelected){
+  if(sh.type==='blur'){drawBlur(cx,sh);return;}
   cx.save();
-  var shColor = sh.color || STROKE_COLOR;
-  cx.strokeStyle = isSelected ? '#228BF4' : shColor;
-  cx.lineWidth = isSelected ? sw+1 : sw;
-  cx.lineCap='round'; cx.lineJoin='round';
+  var shColor=sh.color||STROKE_COLOR;
+  cx.strokeStyle=isSelected?'#228BF4':shColor;
+  cx.lineWidth=isSelected?sw+1:sw;
+  cx.lineCap='round';cx.lineJoin='round';
   var s=canvas.width/(baseImage?baseImage.naturalWidth:canvas.width);
-  if (sh.type==='rect') {
+  if(sh.type==='rect'){
     var x=Math.min(sh.x1,sh.x2),y=Math.min(sh.y1,sh.y2),w=Math.abs(sh.x2-sh.x1),h=Math.abs(sh.y2-sh.y1);
     var r=Math.min(RECT_RADIUS*s,w/2,h/2);
-    cx.beginPath();
-    cx.moveTo(x+r,y);cx.lineTo(x+w-r,y);cx.quadraticCurveTo(x+w,y,x+w,y+r);
+    cx.beginPath();cx.moveTo(x+r,y);cx.lineTo(x+w-r,y);cx.quadraticCurveTo(x+w,y,x+w,y+r);
     cx.lineTo(x+w,y+h-r);cx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
     cx.lineTo(x+r,y+h);cx.quadraticCurveTo(x,y+h,x,y+h-r);
-    cx.lineTo(x,y+r);cx.quadraticCurveTo(x,y,x+r,y);
-    cx.closePath();cx.stroke();
-  } else if (sh.type==='line') {
+    cx.lineTo(x,y+r);cx.quadraticCurveTo(x,y,x+r,y);cx.closePath();cx.stroke();
+  } else if(sh.type==='line'){
     cx.beginPath();cx.moveTo(sh.x1,sh.y1);cx.lineTo(sh.x2,sh.y2);cx.stroke();
-  } else if (sh.type==='arrow') {
+  } else if(sh.type==='arrow'){
     var dx=sh.x2-sh.x1,dy=sh.y2-sh.y1,len=Math.sqrt(dx*dx+dy*dy);
     if(len<1){cx.restore();return;}
     var ux=dx/len,uy=dy/len,hl=Math.max(14*s,12),a=0.45;
@@ -783,8 +719,7 @@ function drawShape(cx, sh, sw, isSelected) {
     cx.stroke();
   }
   cx.restore();
-
-  if (isSelected) {
+  if(isSelected){
     var handles=getHandles(sh);
     var scl=canvas.width/canvas.getBoundingClientRect().width;
     var hs=HANDLE_SIZE*scl;
@@ -798,244 +733,118 @@ function drawShape(cx, sh, sw, isSelected) {
   }
 }
 
-function redraw(preview) {
+function redraw(preview){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  if (baseImage) ctx.drawImage(baseImage,0,0,canvas.width,canvas.height);
+  if(baseImage) ctx.drawImage(baseImage,0,0,canvas.width,canvas.height);
   var canvasRect=canvas.getBoundingClientRect();
   var sw=STROKE_WIDTH*(canvas.width/canvasRect.width);
-  shapes.forEach(function(sh,i){ drawShape(ctx,sh,sw,i===selectedIdx); });
-  if (preview) drawShape(ctx,preview,sw,false);
-  // Update delete button position if something selected
-  if (selectedIdx>=0&&selectedIdx<shapes.length&&!drawing) {
-    requestAnimationFrame(function(){ showDeleteBtn(shapes[selectedIdx]); });
+  shapes.forEach(function(sh,i){drawShape(ctx,sh,sw,i===selectedIdx);});
+  if(preview) drawShape(ctx,preview,sw,false);
+  if(selectedIdx>=0&&selectedIdx<shapes.length&&!drawing){
+    requestAnimationFrame(function(){showToolbar(shapes[selectedIdx]);});
   } else {
-    hideDeleteBtn();
+    hideToolbar();
   }
 }
 
-function getDisplayScale() { return canvas.width/canvas.getBoundingClientRect().width; }
+function getDisplayScale(){return canvas.width/canvas.getBoundingClientRect().width;}
 
-function loadAnnotImage(img) {
-  baseImage=img; canvas.width=img.naturalWidth; canvas.height=img.naturalHeight;
-  shapes=[]; selectedIdx=-1; hideDeleteBtn(); redraw();
-  s1Drop.style.display='none'; s1Editor.style.display='block';
+function loadAnnotImage(img){
+  baseImage=img;canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+  shapes=[];selectedIdx=-1;hideToolbar();redraw();
+  s1Drop.style.display='none';s1Editor.style.display='block';
 }
 
-setupDrop(s1Drop, s1File, function(file){ readFile(file,function(img){ loadAnnotImage(img); }); });
+setupDrop(s1Drop,s1File,function(file){readFile(file,function(img){loadAnnotImage(img);});});
 
 ['rect','arrow','line','blur'].forEach(function(t){
-  document.getElementById('tool-'+t).addEventListener('click', function(){
-    currentTool=t; selectedIdx=-1; hideDeleteBtn(); redraw();
-    document.querySelectorAll('.tool-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('tool-'+t).addEventListener('click',function(){
+    currentTool=t;selectedIdx=-1;hideToolbar();redraw();
+    document.querySelectorAll('.tool-btn').forEach(function(b){b.classList.remove('active');});
     this.classList.add('active');
   });
 });
 
-document.getElementById('tool-undo').addEventListener('click', function(){ selectedIdx=-1; hideDeleteBtn(); shapes.pop(); redraw(); });
-document.getElementById('tool-clear').addEventListener('click', function(){ selectedIdx=-1; hideDeleteBtn(); shapes=[]; redraw(); });
+document.getElementById('tool-undo').addEventListener('click',function(){selectedIdx=-1;hideToolbar();shapes.pop();redraw();});
+document.getElementById('tool-clear').addEventListener('click',function(){selectedIdx=-1;hideToolbar();shapes=[];redraw();});
 
-document.addEventListener('keydown', function(e){
-  if ((e.key==='Delete'||e.key==='Backspace')&&selectedIdx>=0&&s1Editor.style.display!=='none') {
-    shapes.splice(selectedIdx,1); selectedIdx=-1; hideDeleteBtn(); redraw(); e.preventDefault();
+document.addEventListener('keydown',function(e){
+  if((e.key==='Delete'||e.key==='Backspace')&&selectedIdx>=0&&s1Editor.style.display!=='none'){
+    shapes.splice(selectedIdx,1);selectedIdx=-1;hideToolbar();redraw();e.preventDefault();
   }
-  if (e.key==='Escape') { selectedIdx=-1; hideDeleteBtn(); redraw(); }
+  if(e.key==='Escape'){selectedIdx=-1;hideToolbar();redraw();}
 });
 
-canvas.addEventListener('mousedown', function(e){
+canvas.addEventListener('mousedown',function(e){
   var p=getPos(e);
-
-  // If blur tool, always draw — skip selection logic
-  if (currentTool==='blur') {
-    selectedIdx=-1; hideDeleteBtn();
-    startX=p.x; startY=p.y; drawing=true; return;
-  }
-
-  // Check handle hit on selected shape
-  if (selectedIdx>=0&&selectedIdx<shapes.length) {
+  if(currentTool==='blur'){selectedIdx=-1;hideToolbar();startX=p.x;startY=p.y;drawing=true;return;}
+  if(selectedIdx>=0&&selectedIdx<shapes.length){
     var sh=shapes[selectedIdx];
     var hi=hitHandle(sh,p.x,p.y);
-    if (hi>=0) { resizing=true; resizeHandle=hi; return; }
-    if (hitShape(sh,p.x,p.y)) { dragging=true; dragOffX=p.x; dragOffY=p.y; return; }
+    if(hi>=0){resizing=true;resizeHandle=hi;return;}
+    if(hitShape(sh,p.x,p.y)){dragging=true;dragOffX=p.x;dragOffY=p.y;return;}
   }
-
-  // Check if clicking any existing shape to select
-  for (var i=shapes.length-1;i>=0;i--) {
-    if (shapes[i].type!=='blur'&&hitShape(shapes[i],p.x,p.y)) {
-      selectedIdx=i; redraw(); return;
-    }
+  for(var i=shapes.length-1;i>=0;i--){
+    if(shapes[i].type!=='blur'&&hitShape(shapes[i],p.x,p.y)){selectedIdx=i;redraw();return;}
   }
-
-  // Start new shape
-  selectedIdx=-1; hideDeleteBtn();
-  startX=p.x; startY=p.y; drawing=true;
+  selectedIdx=-1;hideToolbar();
+  startX=p.x;startY=p.y;drawing=true;
 });
 
-canvas.addEventListener('mousemove', function(e){
+canvas.addEventListener('mousemove',function(e){
   var p=getPos(e);
-
-  if (resizing&&selectedIdx>=0) {
-    applyResizeHandle(shapes[selectedIdx],resizeHandle,p.x,p.y); redraw(); return;
-  }
-  if (dragging&&selectedIdx>=0) {
+  if(resizing&&selectedIdx>=0){applyResizeHandle(shapes[selectedIdx],resizeHandle,p.x,p.y);redraw();return;}
+  if(dragging&&selectedIdx>=0){
     var dx=p.x-dragOffX,dy=p.y-dragOffY;
     shapes[selectedIdx].x1+=dx;shapes[selectedIdx].y1+=dy;
     shapes[selectedIdx].x2+=dx;shapes[selectedIdx].y2+=dy;
-    dragOffX=p.x;dragOffY=p.y; redraw(); return;
+    dragOffX=p.x;dragOffY=p.y;redraw();return;
   }
-  if (!drawing) return;
+  if(!drawing) return;
   var ex=p.x,ey=p.y;
-  if (currentTool==='arrow'||currentTool==='line') {
-    var sn=snapAngle(startX,startY,p.x,p.y);ex=sn.x;ey=sn.y;
-  }
+  if(currentTool==='arrow'||currentTool==='line'){var sn=snapAngle(startX,startY,p.x,p.y);ex=sn.x;ey=sn.y;}
   redraw({type:currentTool,x1:startX,y1:startY,x2:ex,y2:ey});
 });
 
-canvas.addEventListener('mouseup', function(e){
-  if (resizing) { resizing=false; resizeHandle=-1; return; }
-  if (dragging) { dragging=false; return; }
-  if (!drawing) return;
+canvas.addEventListener('mouseup',function(e){
+  if(resizing){resizing=false;resizeHandle=-1;return;}
+  if(dragging){dragging=false;return;}
+  if(!drawing) return;
   drawing=false;
   var p=getPos(e);
   var ex=p.x,ey=p.y;
-  if (currentTool==='arrow'||currentTool==='line') {
-    var sn=snapAngle(startX,startY,p.x,p.y);ex=sn.x;ey=sn.y;
-  }
+  if(currentTool==='arrow'||currentTool==='line'){var sn=snapAngle(startX,startY,p.x,p.y);ex=sn.x;ey=sn.y;}
   shapes.push({type:currentTool,x1:startX,y1:startY,x2:ex,y2:ey,color:STROKE_COLOR});
-  if (currentTool!=='blur') { selectedIdx=shapes.length-1; }
+  if(currentTool!=='blur') selectedIdx=shapes.length-1;
   redraw();
 });
 
-canvas.addEventListener('mouseleave', function(){
-  if (drawing){drawing=false;redraw();}
-  if (resizing){resizing=false;resizeHandle=-1;}
-  if (dragging){dragging=false;}
+canvas.addEventListener('mouseleave',function(){
+  if(drawing){drawing=false;redraw();}
+  if(resizing){resizing=false;resizeHandle=-1;}
+  if(dragging){dragging=false;}
 });
 
-canvas.addEventListener('mousemove', function(e){
-  if (drawing||resizing||dragging) return;
+canvas.addEventListener('mousemove',function(e){
+  if(drawing||resizing||dragging) return;
   var p=getPos(e);
-  if (selectedIdx>=0&&selectedIdx<shapes.length&&shapes[selectedIdx].type!=='blur') {
-    if (hitHandle(shapes[selectedIdx],p.x,p.y)>=0) { canvas.style.cursor='pointer'; return; }
-    if (hitShape(shapes[selectedIdx],p.x,p.y)) { canvas.style.cursor='move'; return; }
+  if(selectedIdx>=0&&selectedIdx<shapes.length&&shapes[selectedIdx].type!=='blur'){
+    if(hitHandle(shapes[selectedIdx],p.x,p.y)>=0){canvas.style.cursor='pointer';return;}
+    if(hitShape(shapes[selectedIdx],p.x,p.y)){canvas.style.cursor='move';return;}
   }
-  for (var i=shapes.length-1;i>=0;i--) {
-    if (shapes[i].type!=='blur'&&hitShape(shapes[i],p.x,p.y)) { canvas.style.cursor='pointer'; return; }
+  for(var i=shapes.length-1;i>=0;i--){
+    if(shapes[i].type!=='blur'&&hitShape(shapes[i],p.x,p.y)){canvas.style.cursor='pointer';return;}
   }
-  canvas.style.cursor = currentTool==='blur' ? 'crosshair' : 'crosshair';
-}, true);
-
-document.getElementById('s1-download').addEventListener('click', function(){
-  var out=document.createElement('canvas');
-  out.width=baseImage.naturalWidth;out.height=baseImage.naturalHeight;
-  var octx=out.getContext('2d');octx.drawImage(baseImage,0,0);
-  var scaleX=baseImage.naturalWidth/canvas.width,scaleY=baseImage.naturalHeight/canvas.height;
-  var displayScale=getDisplayScale();
-  var exportStroke=STROKE_WIDTH*displayScale;
-  shapes.forEach(function(sh){
-    var mapped={type:sh.type,x1:sh.x1*scaleX,y1:sh.y1*scaleY,x2:sh.x2*scaleX,y2:sh.y2*scaleY};
-    if(mapped.type==='blur'){
-      var bx=Math.round(Math.min(mapped.x1,mapped.x2)),by=Math.round(Math.min(mapped.y1,mapped.y2));
-      var bw=Math.round(Math.abs(mapped.x2-mapped.x1)),bh=Math.round(Math.abs(mapped.y2-mapped.y1));
-      if(bw>2&&bh>2){pixelate(octx,bx,by,bw,bh,Math.max(16,Math.round(Math.min(bw,bh)/6)));}
-      return;
-    }
-    octx.save();octx.strokeStyle=sh.color||STROKE_COLOR;octx.lineWidth=exportStroke;octx.lineCap='round';octx.lineJoin='round';
-    if(mapped.type==='rect'){
-      var x=Math.min(mapped.x1,mapped.x2),y=Math.min(mapped.y1,mapped.y2),w=Math.abs(mapped.x2-mapped.x1),h=Math.abs(mapped.y2-mapped.y1);
-      var r=Math.min(RECT_RADIUS,w/2,h/2);
-      octx.beginPath();octx.moveTo(x+r,y);octx.lineTo(x+w-r,y);octx.quadraticCurveTo(x+w,y,x+w,y+r);
-      octx.lineTo(x+w,y+h-r);octx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-      octx.lineTo(x+r,y+h);octx.quadraticCurveTo(x,y+h,x,y+h-r);
-      octx.lineTo(x,y+r);octx.quadraticCurveTo(x,y,x+r,y);octx.closePath();octx.stroke();
-    } else if(mapped.type==='line'){
-      octx.beginPath();octx.moveTo(mapped.x1,mapped.y1);octx.lineTo(mapped.x2,mapped.y2);octx.stroke();
-    } else if(mapped.type==='arrow'){
-      var dx=mapped.x2-mapped.x1,dy=mapped.y2-mapped.y1,len=Math.sqrt(dx*dx+dy*dy);
-      if(len<1){octx.restore();return;}
-      var ux=dx/len,uy=dy/len,hl=14,a=0.45;
-      octx.beginPath();octx.moveTo(mapped.x1,mapped.y1);octx.lineTo(mapped.x2,mapped.y2);octx.stroke();
-      octx.beginPath();
-      octx.moveTo(mapped.x2,mapped.y2);octx.lineTo(mapped.x2-hl*(ux*Math.cos(a)-uy*Math.sin(a)),mapped.y2-hl*(uy*Math.cos(a)+ux*Math.sin(a)));
-      octx.moveTo(mapped.x2,mapped.y2);octx.lineTo(mapped.x2-hl*(ux*Math.cos(a)+uy*Math.sin(a)),mapped.y2-hl*(uy*Math.cos(a)-ux*Math.sin(a)));
-      octx.stroke();
-    }
-    octx.restore();
-  });
-  var a=document.createElement('a');a.href=out.toDataURL('image/png');a.download='appfigures-annotated.png';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-});
+  canvas.style.cursor='crosshair';
+},true);
 
 document.getElementById('s1-reset').addEventListener('click', function(){
-  s1Editor.style.display='none';s1Drop.style.display='block';s1File.value='';
-  baseImage=null;shapes=[];selectedIdx=-1;hideDeleteBtn();ctx.clearRect(0,0,canvas.width,canvas.height);
-});
-
-// ── Section 2: Wrap ───────────────────────────────────────────────────────────
-var W=1600,H=864,IMG_H=720,R_OUTER=18,R_IMG=12;
-var s2DropEl=document.getElementById('s2-drop'), s2FileEl=document.getElementById('s2-file');
-var s2Result=document.getElementById('s2-result'), s2Output=document.getElementById('s2-output');
-var s2Dims=document.getElementById('s2-dims');
-var s2DataUrl=null;
-
-function rrWrap(cx,x,y,w,h,r){
-  cx.beginPath(); cx.moveTo(x+r,y); cx.lineTo(x+w-r,y); cx.quadraticCurveTo(x+w,y,x+w,y+r);
-  cx.lineTo(x+w,y+h-r); cx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-  cx.lineTo(x+r,y+h); cx.quadraticCurveTo(x,y+h,x,y+h-r);
-  cx.lineTo(x,y+r); cx.quadraticCurveTo(x,y,x+r,y); cx.closePath();
-}
-
-function renderWrap(img){
-  var c=document.createElement('canvas'); c.width=W; c.height=H; var cx=c.getContext('2d');
-  cx.save(); rrWrap(cx,0,0,W,H,R_OUTER); cx.clip();
-  cx.fillStyle='#fff'; cx.fillRect(0,0,W,H);
-  var g=cx.createLinearGradient(0,0,W,H); g.addColorStop(0,'rgba(34,139,244,0.02)'); g.addColorStop(1,'rgba(34,139,244,0.07)');
-  cx.fillStyle=g; cx.fillRect(0,0,W,H); cx.restore();
-  cx.save(); cx.strokeStyle='rgba(34,139,244,0.10)'; cx.lineWidth=1.5; rrWrap(cx,0.75,0.75,W-1.5,H-1.5,R_OUTER); cx.stroke(); cx.restore();
-  var MAX_IMG_W = W - 108;
-  var MAX_IMG_H = 720;
-  var ratio = img.naturalWidth / img.naturalHeight;
-  var imgW, imgH;
-  if (ratio * MAX_IMG_H > MAX_IMG_W) {
-    imgW = MAX_IMG_W;
-    imgH = Math.round(MAX_IMG_W / ratio);
-  } else {
-    imgH = MAX_IMG_H;
-    imgW = Math.round(ratio * imgH);
-  }
-  var imgX=Math.round((W-imgW)/2), imgY=Math.round((H-imgH)/2);
-  var sc=document.createElement('canvas'); sc.width=W; sc.height=H; var scx=sc.getContext('2d');
-  [{ox:0,oy:0.563,blur:1.69,color:'rgba(12,13,14,0.07)'},{ox:0,oy:0.563,blur:1.127,color:'rgba(12,13,14,0.14)'},
-   {ox:38.31,oy:60.845,blur:20.282,color:'rgba(230,235,245,0.00)'},{ox:14.085,oy:21.972,blur:15.775,color:'rgba(230,235,245,0.06)'},
-   {ox:6.197,oy:9.577,blur:11.268,color:'rgba(230,235,245,0.12)'},{ox:1.69,oy:2.254,blur:6.197,color:'rgba(230,235,245,0.14)'}
-  ].forEach(function(s){ scx.save(); scx.shadowOffsetX=s.ox; scx.shadowOffsetY=s.oy; scx.shadowBlur=s.blur; scx.shadowColor=s.color; rrWrap(scx,imgX,imgY,imgW,imgH,R_IMG); scx.fillStyle='#fff'; scx.fill(); scx.restore(); });
-  cx.drawImage(sc,0,0);
-  cx.save(); rrWrap(cx,imgX,imgY,imgW,imgH,R_IMG); cx.clip(); cx.drawImage(img,imgX,imgY,imgW,imgH); cx.restore();
-  return c.toDataURL('image/png');
-}
-
-function loadWrapImage(img){
-  var ratio2=img.naturalWidth/img.naturalHeight;
-  var maxW2=1600-108, maxH2=720;
-  var imgW2,imgH2;
-  if(ratio2*maxH2>maxW2){imgW2=maxW2;imgH2=Math.round(maxW2/ratio2);}
-  else{imgH2=maxH2;imgW2=Math.round(ratio2*maxH2);}
-  s2Dims.textContent=img.naturalWidth+' x '+img.naturalHeight+'px — rendered at '+imgW2+' x '+imgH2+'px';
-  s2DataUrl=renderWrap(img); s2Output.src=s2DataUrl;
-  s2DropEl.style.display='none'; s2Result.style.display='block';
-
-}
-
-setupDrop(s2DropEl, s2FileEl, function(file){ readFile(file, loadWrapImage); });
-
-document.getElementById('s2-download').addEventListener('click', function(){
-  if(!s2DataUrl) return;
-  var a=document.createElement('a'); a.href=s2DataUrl; a.download='appfigures-kb-screenshot.png';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-});
-
-document.getElementById('s2-reset').addEventListener('click', function(){
-  s2Result.style.display='none'; s2DropEl.style.display='block';
-  s2FileEl.value=''; s2Output.src=''; s2DataUrl=null;
+  s1Editor.style.display='none';
+  s1Drop.style.display='block';
+  s1File.value='';
+  baseImage=null; shapes=[]; selectedIdx=-1;
+  hideToolbar();
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 });
 
 // ── Global paste ──────────────────────────────────────────────────────────────
@@ -1044,8 +853,9 @@ document.addEventListener('paste', function(e){
   for(var i=0;i<items.length;i++){
     if(items[i].type.startsWith('image/')){
       var file=items[i].getAsFile();
-      if(s1Editor.style.display==='none'&&s1Drop.style.display!=='none'){ readFile(file,function(img){loadAnnotImage(img);}); }
-      else if(s2Result.style.display==='none'&&s2DropEl.style.display!=='none'){ readFile(file,loadWrapImage); }
+      if(s1Editor.style.display==='none'&&s1Drop.style.display!=='none'){
+        readFile(file,function(img){loadAnnotImage(img);});
+      }
       break;
     }
   }
